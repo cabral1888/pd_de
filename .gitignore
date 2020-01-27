@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Spark files
+streaming/spark-warehouse/
+
+# Custom files
+data/
+description.pdf
