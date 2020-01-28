@@ -30,3 +30,27 @@ PostgreSQL                Data lake
               Analysis
 ```            
 # Running the code
+## Running through shell
+You can run either batch analysis or streaming by command line. Just look at the file `run.sh` and see your content. There is a lot of `spark-submit` commands, one per json file or streaming ingestion. You just need to choose some of them and type:
+```
+./run.sh
+```
+
+## Running through Apache Airflow
+Considering you already have installed Apache Airflow in the host computer, all you need to do is:
+1. Copy the file inside `dags/` dir and put it on the following directory:
+```
+~/airflow/dags
+```
+2. Start airflow scheduler by typing:
+```
+airflow scheduler
+```
+3. Finally, start airflow web UI:
+```
+airflow webserver
+```
+4. On the UI, click on `DAGS` tab, look for `pd_pipeline` and enable it.
+5. The same spaek-submit commands you have just saw in the previous session afe going to run every day at mid-night. You can hurry up by pressing `schedule now`
+
+PS.: Apache airflow will not start streaming jobs on thiz project. In this case, it is only possible through shell command line.
