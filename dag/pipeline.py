@@ -4,6 +4,11 @@ from airflow.operators import BashOperator
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
+######################################
+#
+## Airflow DAG
+#
+######################################
 
 default_args = {
 	"depends_on_past": False,
@@ -11,8 +16,18 @@ default_args = {
 	"email_on_failure": False
 }
 
+######################################
+#
+## DAG will runs on every day at midnight
+#
+######################################
 dag = DAG("pd_pipeline", default_args=default_args, schedule_interval="0 0 * * *")
 
+######################################
+#
+## Spark submit command definition
+#
+######################################
 proj_home = "/home/igor/codes/pd_de"
 virtualenv_path = "/home/igor/spark_env"
 
@@ -25,12 +40,22 @@ py_files = '--py-files '+proj_home+'/dependencies.zip '+proj_home+'/run_etl.py'
 
 command_base = "{} {} {} {} {} {}".format(virtualenv_activate, shell_command, confs, files, driver_class_path, py_files)
 
+######################################
+#
+## Environments variables definition
+#
+######################################
 env = {
 	"JAVA_HOME":virtualenv_path+"/java/jdk1.8.0_241",
 	"DATA_DIR_1":proj_home+"/data/BASEA/",
 	"log4j_setting":"-Dlog4j.configuration=file://"+proj_home+"/log4j.properties"
 }
 
+######################################
+#
+## Operators definition
+#
+######################################
 copy_log4j = BashOperator(
 	task_id="copy_log4j",
 	bash_command="cp $PROJ_HOME/log4j.properties .",
@@ -85,4 +110,9 @@ students = BashOperator(
 	env=env
 )
 
+######################################
+#
+## Operators execution order
+#
+######################################
 copy_log4j >> zip_dependencies >> [students, courses, universities, subjects] >> subscriptions 
