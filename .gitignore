@@ -130,6 +130,8 @@ dmypy.json
 
 # Spark files
 streaming/spark-warehouse/
+metastore_db/
+checkpoint/
 
 # Custom files
 data/

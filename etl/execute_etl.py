@@ -23,7 +23,6 @@ def read_file_and_store_on_postgresql(spark_session, file, tbl_name, schema, dat
 			.drop(col_name) \
 			.withColumnRenamed(col_name+"_temp", col_name)
 
-
 	logging.info("Number of rows: "+str(df.count()))
 
 	df \
