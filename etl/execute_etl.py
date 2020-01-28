@@ -19,7 +19,7 @@ def read_file_and_store_on_postgresql(spark_session, file, tbl_name, schema, dat
 		if date_ops:
 			df = convert_date_using_data_ops_schema(df, date_ops)
 
-		logging.info("Number of rows: "+str(df.count()))
+		log(spark_session).info("Number of rows: "+str(df.count()))
 
 		try:
 			df \

@@ -13,7 +13,7 @@ def get_schema(schema_json):
 	schema = StructType([StructField(k, mapping.get(v.lower())(), True) for (k, v) in items])
 	return schema
 
-def convert_date_using_data_ops_schema(df, data_ops):
+def convert_date_using_data_ops_schema(df, date_ops):
 	col_name = date_ops["date_column"]
 	date_format = date_ops["date_format"]
 
