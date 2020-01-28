@@ -13,12 +13,12 @@ zip -r dependencies.zip etl/ utils/ streaming/
 
 #spark-submit --conf "spark.driver.extraJavaOptions=${log4j_setting}" --conf "spark.executor.extraJavaOptions=${log4j_setting}" --files log4j.properties --driver-class-path jars/* --py-files dependencies.zip run_etl.py universities.json universities '{"Id":"integer", "Name":"string"}' 
 
-#spark-submit --driver-class-path jars/* --py-files dependencies.zip run_etl.py students.json students '{"Id":"string", "RegisteredDate":"timestamp", "State":"string", "City":"string", "UniversityId":"string", "CourseId":"string", "SignupSource":"string"}' '{"date_column": "RegisteredDate", "date_format":"yyyy-MM-dd HH:mm:ss"}'
+#spark-submit --conf "spark.driver.extraJavaOptions=${log4j_setting}" --conf "spark.executor.extraJavaOptions=${log4j_setting}" --files log4j.properties --driver-class-path jars/* --py-files dependencies.zip run_etl.py students.json students '{"Id":"string", "RegisteredDate":"timestamp", "State":"string", "City":"string", "UniversityId":"string", "CourseId":"string", "SignupSource":"string"}' '{"date_column": "RegisteredDate", "date_format":"yyyy-MM-dd HH:mm:ss"}'
 
-#spark-submit --driver-class-path jars/* --py-files dependencies.zip run_etl.py subscriptions.json subscriptions '{"StudentId":"string", "PaymentDate":"timestamp", "PlanType":"string"}' '{"date_column": "PaymentDate", "date_format":"yyyy-MM-dd HH:mm:ss"}'
+#spark-submit --conf "spark.driver.extraJavaOptions=${log4j_setting}" --conf "spark.executor.extraJavaOptions=${log4j_setting}" --files log4j.properties --driver-class-path jars/* --py-files dependencies.zip run_etl.py subscriptions.json subscriptions '{"StudentId":"string", "PaymentDate":"timestamp", "PlanType":"string"}' '{"date_column": "PaymentDate", "date_format":"yyyy-MM-dd HH:mm:ss"}'
 
-#spark-submit --driver-class-path jars/* --py-files dependencies.zip run_etl.py subjects.json subjects '{"Id":"integer", "Name":"string"}' 
+#spark-submit --conf "spark.driver.extraJavaOptions=${log4j_setting}" --conf "spark.executor.extraJavaOptions=${log4j_setting}" --files log4j.properties --driver-class-path jars/* --py-files dependencies.zip run_etl.py subjects.json subjects '{"Id":"integer", "Name":"string"}' 
 
-#spark-submit --py-files dependencies.zip run_streaming.py "students" '{"Id":"string", "RegisteredDate":"timestamp", "State":"string", "City":"string", "UniversityId":"string", "CourseId":"string", "SignupSource":"string"}' '{"date_column": "RegisteredDate", "date_format":"yyyy-MM-dd HH:mm:ss"}'
+spark-submit --conf "spark.driver.extraJavaOptions=${log4j_setting}" --conf "spark.executor.extraJavaOptions=${log4j_setting}" --files log4j.properties --py-files dependencies.zip run_streaming.py "sessions" '{"StudentId":"string", "SessionStartTime":"timestamp", "StudentClient":"string"}' '{"date_column": "SessionStartTime", "date_format":"yyyy-MM-dd HH:mm:ss"}' &
 
-#spark-submit --py-files dependencies.zip run_streaming.py "student_follow_subject" '{"StudentId":"string", "SubjectId":"integer", "FollowDate":"timestamp"}' '{"date_column": "FollowDate", "date_format":"yyyy-MM-dd HH:mm:ss"}'
+spark-submit --conf "spark.driver.extraJavaOptions=${log4j_setting}" --conf "spark.executor.extraJavaOptions=${log4j_setting}" --files log4j.properties --py-files dependencies.zip run_streaming.py "student_follow_subject" '{"StudentId":"string", "SubjectId":"integer", "FollowDate":"timestamp"}' '{"date_column": "FollowDate", "date_format":"yyyy-MM-dd HH:mm:ss"}' &
