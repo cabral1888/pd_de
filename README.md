@@ -12,6 +12,7 @@ Here, the data have a major requirement: be processed as fast as possible, in re
 ## Architecture
 The project was based on lambda architecture pattern as follows:
 
+```
 json_files                 Socket
     |                      Broker, etc
     |                        |
@@ -27,5 +28,5 @@ PostgreSQL                Data lake
         \                 /
           BI+Statistic/ML
               Analysis
-              
+```            
 # Running the code
