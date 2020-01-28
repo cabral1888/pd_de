@@ -31,7 +31,7 @@ PostgreSQL                Data lake
 ```            
 # Running the code
 ## Running through shell
-You can run either batch analysis or streaming by command line. Just look at the file `run.sh` and see your content. There is a lot of `spark-submit` commands, one per json file or streaming ingestion. You just need to choose some of them and type:
+You can run either batch analysis or streaming by command line. Just look at the file `run.sh` and see your content. There is a lot of `spark-submit` commands, one per json file or streaming ingestion. You just need to choose some of them, uncoment it, and type:
 ```
 ./run.sh
 ```
