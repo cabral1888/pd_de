@@ -3,14 +3,15 @@ from pyspark.sql.functions import *
 import json
 
 from utils.logging_utils import log
-from utils.schema_utils import convert_date_using_data_ops_schema, define_date_columns_in_df, change_whitespace_on_columns_by_underscore
+from utils.schema_utils import convert_date_using_data_ops_schema, define_date_columns_in_df, change_whitespace_on_columns_by_underscore, get_schema
 
 
 class EtlExecutor:
-    __init__(self, args):
+    def __init__(self, args, data_dir):
         self._args = args
+        self._input_data_dir = data_dir
 
-    def read_file_and_store_on_postgresql(spark_session, postgresql_access_dict):
+    def read_file_and_store_on_postgresql(self, spark_session, postgresql_access_dict):
         """
             Read a traditional JSON ([{"a":1, "b":2}, {...}]) file 
             and store it into a postgresql database 
@@ -42,7 +43,8 @@ class EtlExecutor:
                 to parse string date into a timestamp
 
         """
-        file = self._args[2]
+        input_filename = self._args[2]
+        file = self._input_data_dir+input_filename
         tbl_name = self._args[3]
         schema_json = self._args[4]
         date_ops = json.loads(self._args[5]) if len(self._args) == 6 else None
@@ -53,7 +55,7 @@ class EtlExecutor:
         #
         ##################################
         schema = get_schema(schema_json)
-        log(spark).info("Schema: "+str(schema))
+        log(spark_session).info("Schema: "+str(schema))
 
         try:
             rdd = spark_session \
@@ -86,7 +88,7 @@ class EtlExecutor:
         except Exception as e:
             log(spark_session).error(e)
 
-    def read_file_and_store_on_datalake(spark_session, output_base_dir):
+    def read_file_and_store_on_datalake(self, spark_session, output_base_dir):
         """
             Read a traditional JSON ([{"a":1, "b":2}, {...}]) file 
             and store it into a postgresql database 
@@ -118,7 +120,8 @@ class EtlExecutor:
                 to parse string date into a timestamp
 
         """
-        file = self._args[2]
+        input_filename = self._args[2]
+        file = self._input_data_dir+input_filename
         output_data_name = self._args[3]
         output_path = output_base_dir+"/"+output_data_name
         schema_json = self._args[4]
@@ -130,7 +133,7 @@ class EtlExecutor:
         #
         ##################################
         schema = get_schema(schema_json)
-        log(spark).info("Schema: "+str(schema))
+        log(spark_session).info("Schema: "+str(schema))
 
         try:
             df = spark_session.read.schema(schema).json(file)

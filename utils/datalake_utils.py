@@ -1,6 +1,6 @@
 from datetime import datetime
 
-def get_path_by_day(base_path, streaming_name):
+def get_path_by_day(base_path, file_name):
     """
         Get path of file on datalake  considering 
         the following pattern: %Y/%m/%d/FILES
@@ -20,4 +20,4 @@ def get_path_by_day(base_path, streaming_name):
     month = datetime.now().strftime("%m")
     day = datetime.now().strftime("%d")
 
-    return "{}/{}/{}/{}/{}".format(base_path, streaming_name, year, month, day)
+    return "{}/{}/{}/{}/{}".format(base_path, file_name, year, month, day)
