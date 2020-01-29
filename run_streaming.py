@@ -27,6 +27,7 @@ spark = SparkSession.builder \
      .master("local") \
      .appName(streaming_name) \
      .config("spark.sql.streaming.checkpointLocation", checkpoint_dir)\
+     .config("spark.sql.shuffle.partittions", 8) \
      .getOrCreate()
 
 ##################################

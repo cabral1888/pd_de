@@ -25,4 +25,5 @@ class PreProcessExecutor:
         df \
         	.coalesce(4) \
             .write \
+            .mode("overwrite") \
             .parquet(output_path)
