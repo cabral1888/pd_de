@@ -5,6 +5,7 @@ import json
 import sys
 
 from etl.etl_executor import EtlExecutor
+from etl.preprocess_executor import PreProcessExecutor
 from utils.schema_utils import get_schema
 from utils.logging_utils import log
 
@@ -45,9 +46,12 @@ postgresql_access_dict = {
 	"password":psg_password
 }
 
-etl_exec = EtlExecutor(sys.argv)
-
 if mode == "datalake":
+	etl_exec = EtlExecutor(sys.argv)
 	etl_exec.read_file_and_store_on_datalake(spark, output_base_dir)
-else:
+elif mode == "etl":
+	etl_exec = EtlExecutor(sys.argv)
 	etl_exec.read_file_and_store_on_postgresql(spark, postgresql_access_dict)
+elif mode == "pivotting":
+	preprocess_exec = PreProcessExecutor(sys.argv)
+	preprocess_exec.generate_pivot_file_user_x_category_page(spark)

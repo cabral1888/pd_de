@@ -155,6 +155,3 @@ class EtlExecutor:
         
         except Exception as e:
             log(spark_session).error(e)
-
-    def generate_pivot_file_user_x_category_page(spark_session, file, output_path):
-        return 1
