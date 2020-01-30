@@ -1,12 +1,10 @@
 from pyspark.sql import SparkSession
 
 import os
-import json
 import sys
 
 from etl.etl_executor import EtlExecutor
 from etl.preprocess_executor import PreProcessExecutor
-from utils.logging_utils import log
 
 ##################################
 #
@@ -28,10 +26,10 @@ input_filename = sys.argv[2]
 #
 ##################################
 spark = SparkSession.builder \
-     .master("local") \
-     .appName(input_filename) \
-     .config("spark.sql.shuffle.partittions", 8) \
-     .getOrCreate()
+    .master("local") \
+    .appName(input_filename) \
+    .config("spark.sql.shuffle.partittions", 8) \
+    .getOrCreate()
 
 ##################################
 #
@@ -40,17 +38,17 @@ spark = SparkSession.builder \
 #
 ##################################
 postgresql_access_dict = {
-	"database":psg_database, 
-	"username":psg_username, 
-	"password":psg_password
+    "database": psg_database,
+    "username": psg_username,
+    "password": psg_password
 }
 
 if mode == "datalake":
-	etl_exec = EtlExecutor(sys.argv, input_data_dir)
-	etl_exec.read_file_and_store_on_datalake(spark, output_base_dir)
+    etl_exec = EtlExecutor(sys.argv, input_data_dir)
+    etl_exec.read_file_and_store_on_datalake(spark, output_base_dir)
 elif mode == "etl":
-	etl_exec = EtlExecutor(sys.argv, input_data_dir)
-	etl_exec.read_file_and_store_on_postgresql(spark, postgresql_access_dict)
+    etl_exec = EtlExecutor(sys.argv, input_data_dir)
+    etl_exec.read_file_and_store_on_postgresql(spark, postgresql_access_dict)
 elif mode == "pivot":
-	preprocess_exec = PreProcessExecutor(sys.argv, input_data_dir)
-	preprocess_exec.generate_pivot_file_user_x_category_page(spark, output_base_dir)
+    preprocess_exec = PreProcessExecutor(sys.argv, input_data_dir)
+    preprocess_exec.generate_pivot_file_user_x_category_page(spark, output_base_dir)

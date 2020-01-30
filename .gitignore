@@ -133,6 +133,9 @@ streaming/spark-warehouse/
 metastore_db/
 checkpoint/
 
+# IDE files
+.idea/
+
 # Custom files
 data/
 description.pdf

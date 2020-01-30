@@ -8,6 +8,7 @@ from utils.schema_utils import convert_date_using_data_ops_schema
 from utils.schema_utils import get_schema
 from utils.datalake_utils import get_path_by_day
 
+
 class StreamingExecutor:
     def __init__(self, args, output_base_dir, streaming_output_interval):
         self._args = args
@@ -38,15 +39,15 @@ class StreamingExecutor:
         #
         ##################################
         schema = get_schema(schema_json)
-        log(spark).info("Schema: "+str(schema))
+        log(spark).info("Schema: " + str(schema))
 
         try:
             df = spark \
-              .readStream \
-              .format("socket") \
-              .option("host", "localhost") \
-              .option("port", 9999) \
-              .load()
+                .readStream \
+                .format("socket") \
+                .option("host", "localhost") \
+                .option("port", 9999) \
+                .load()
 
             df = df \
                 .select(from_json("value", schema).alias("json_data")) \
@@ -59,15 +60,15 @@ class StreamingExecutor:
 
             try:
                 df.writeStream \
-                    .format("parquet")\
-                    .option("path", output_dir)\
+                    .format("parquet") \
+                    .option("path", output_dir) \
                     .trigger(processingTime=self._streaming_output_interval) \
-                    .start()\
+                    .start() \
                     .awaitTermination()
 
             except Exception as e:
                 log(spark).error("Error on writing database... ")
                 log(spark).error(e)
-                
+
         except Exception as e:
             log(spark).error(e)

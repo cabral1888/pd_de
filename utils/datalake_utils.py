@@ -1,5 +1,6 @@
 from datetime import datetime
 
+
 def get_path_by_day(base_path, file_name):
     """
         Get path of file on datalake  considering 

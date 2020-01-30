@@ -20,13 +20,15 @@ def get_schema(schema_json):
             converted into a Spark schema
     """
     items = (json
-        .JSONDecoder(object_pairs_hook=OrderedDict)
-         .decode(schema_json).items())
+             .JSONDecoder(object_pairs_hook=OrderedDict)
+             .decode(schema_json).items())
 
-    mapping = {"string": StringType, "integer": IntegerType, "double": DoubleType, "timestamp": StringType, "boolean": BooleanType}
+    mapping = {"string": StringType, "integer": IntegerType, "double": DoubleType, "timestamp": StringType,
+               "boolean": BooleanType}
 
     schema = StructType([StructField(k, mapping.get(v.lower())(), True) for (k, v) in items])
     return schema
+
 
 def convert_date_using_data_ops_schema(df, date_ops):
     """
@@ -48,9 +50,10 @@ def convert_date_using_data_ops_schema(df, date_ops):
     date_format = date_ops["date_format"]
 
     return df \
-        .selectExpr("to_timestamp("+col_name+", '"+date_format+"') as "+col_name+"_temp", "*") \
+        .selectExpr("to_timestamp(" + col_name + ", '" + date_format + "') as " + col_name + "_temp", "*") \
         .drop(col_name) \
-        .withColumnRenamed(col_name+"_temp", col_name)
+        .withColumnRenamed(col_name + "_temp", col_name)
+
 
 def define_date_columns_in_df(df, date_ops):
     """
@@ -74,11 +77,11 @@ def define_date_columns_in_df(df, date_ops):
         .withColumn("month", month(col(col_name))) \
         .withColumn("day", dayofmonth(col(col_name)))
 
+
 def change_whitespace_on_columns_by_underscore(df):
     cols = df.columns
 
     new_df = df
-    whitespaced = []
     for column in cols:
         if " " in column:
             new_df = new_df.withColumnRenamed(column, column.replace(" ", "_"))

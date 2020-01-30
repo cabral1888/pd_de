@@ -1,11 +1,10 @@
 from pyspark.sql import SparkSession
 
 import os
-import json
 import sys
 
 from streaming.streaming_executor import StreamingExecutor
-from utils.logging_utils import log
+
 
 ##################################
 #
