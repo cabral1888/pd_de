@@ -38,13 +38,22 @@ class PreProcessExecutor:
 
         df = spark_session.read.load(file)
 
-        df = df \
+        df_a = df \
             .select("studentId_clientType", "Page_Category") \
             .groupBy("studentId_clientType") \
             .pivot("Page_Category") \
             .count() \
             .na \
             .fill(0)
+
+        df_b = df \
+            .groupBy("studentId_clientType") \
+            .count() \
+            .withColumnRenamed("studentId_clientType", "studentId_clientType_b") \
+            .withColumnRenamed("count", "count_all_access")
+
+        df = df_a.join(df_b, df_a.studentId_clientType == df_b.studentId_clientType_b) \
+            .drop("studentId_clientType_b")
 
         df \
             .coalesce(4) \

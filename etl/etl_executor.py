@@ -80,7 +80,7 @@ class EtlExecutor:
                     .option("dbtable", "public." + tbl_name) \
                     .option("user", postgresql_access_dict["username"]) \
                     .option("password", postgresql_access_dict["password"]) \
-                    .mode("append") \
+                    .mode("overwrite") \
                     .save()
             except Exception as e:
                 log(spark_session).error("Error on writing database... ")
