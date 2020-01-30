@@ -109,6 +109,7 @@ You can run either batch analysis or streaming by command line. Just look at the
 # (venv) means inside your virtual environment
 (venv)$ ./run.sh
 ```
+PS.: Remember to edit the script setting the environment variables according with your scenario.
 
 ### Running streaming code
 In order to run the streaming code, you must create a Linux socket:
@@ -138,6 +139,12 @@ airflow webserver
 5. The same spaek-submit commands you have just saw in the previous session afe going to run every day at mid-night. You can hurry up by pressing `schedule now`
 
 PS.: Apache airflow will not start streaming jobs on thiz project. In this case, it is only possible through shell command line.
+PS2.: Remember to edit the script setting the environment variables according with your scenario.
 
-# Code explanation
-The code was divided into the following structure:
+# Analysis
+Some analysis was performed using data provided by PD. It was executed using Jupyter notebook tool and SparkML. You can find
+the jupyter files in `analysis_notebooks/` folder. Addionally, to improve the usability of the system, it was developed a 
+script to allow users to start a Jupyter notebook server using a predefined SparkSession. You just need to execute the `run_jupyter_with_spark.sh`
+script and it will launch a Jupyter integrated with Spark.
+
+PS.: Remember to edit the script setting the environment variables according with your scenario. 
