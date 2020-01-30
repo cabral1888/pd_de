@@ -57,8 +57,8 @@ def convert_date_using_data_ops_schema(df, date_ops):
 
 def define_date_columns_in_df(df, date_ops):
     """
-        This function perform a list of transformation
-        in order to convert string date into timestamp
+        This method allows to create the columns "year",
+        "month" and "day"
 
         Parameters
         ----------

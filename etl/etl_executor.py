@@ -8,7 +8,22 @@ from utils.schema_utils import convert_date_using_data_ops_schema, define_date_c
 
 
 class EtlExecutor:
+    """
+        This class implements the application in charge to
+        execute ETLs in general
+
+    """
     def __init__(self, args, data_dir):
+        """
+
+        Parameters
+        ----------
+        args: list
+            Program arguments that will be used by the appli-
+            cation
+        data_dir: str
+            Path where resides the input data
+        """
         self._args = args
         self._input_data_dir = data_dir
 
@@ -23,27 +38,12 @@ class EtlExecutor:
             spark_session: SparkSession
                 The SparkSession of the application
 
-            file: str
-                The file path of the JSON
-
-            tbl_name: str
-                The name of the table that is going to be
-                created on postgresql
-
-            schema: StructuredType(Array(StructuredField))
-                The Spark schema ready to be used to con-
-                vert JSON into a Spark Dataframe
-
             postgresql_access_dict: dict
                 The dictionary with the data necessary to 
                 access the postgresql. The json must contain
                 {"database":..., "username":..., "password":...}
-
-            date_ops: dict, optional
-                The dictionary with the options necessary
-                to parse string date into a timestamp
-
         """
+
         input_filename = self._args[2]
         file = self._input_data_dir + input_filename
         tbl_name = self._args[3]
@@ -100,25 +100,8 @@ class EtlExecutor:
             spark_session: SparkSession
                 The SparkSession of the application
 
-            file: str
-                The file path of the JSON
-
-            tbl_name: str
-                The name of the table that is going to be
-                created on postgresql
-
-            schema: StructuredType(Array(StructuredField))
-                The Spark schema ready to be used to con-
-                vert JSON into a Spark Dataframe
-
-            postgresql_access_dict: dict
-                The dictionary with the data necessary to 
-                access the postgresql. The json must contain
-                {"database":..., "username":..., "password":...}
-
-            date_ops: dict, optional
-                The dictionary with the options necessary
-                to parse string date into a timestamp
+            output_base_dir: str
+                The datalake location
 
         """
         input_filename = self._args[2]
