@@ -103,6 +103,20 @@ https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.
 ```
 You must to change the variable JAVA_HOME (either in .sh scripts and in the Airflow DAG) according to Java location in your machine
 
+## Environment variables
+When you run this code, you must to fill some environment variables according to your scenario (in shell_script and airflow dag). These variables are:
+* JAVA_HOME: java root path location
+* DATA_DIR_1: input directory where live the data provided by PD (root path which contains BASEA and BASEB, whitespaces were removed)
+* STREAMING_DATA_DIR_1: output data of streaming application
+* STREAMING_OUTPUT_INTERVAL: interval of streaming output data
+* CHECKPOINT_DIR: checkpoint necessary to streaming application
+* POSTGRESQL_DATABASE: postgresql database name
+* POSTGRESQL_USERNAME: postgresql username
+* POSTGRESQL_PASSWORD: postgresql password
+
+On Airflow dag file (`pipeline.py`) you must change the value of the following variables:
+* proj_home: project (`pd_de`) root folder
+* virtualenv_path = virtual environment root folder (`venv/`)
 ## Running through shell
 You can run either batch analysis or streaming by command line. Just look at the file `run.sh` and see your content. There is a lot of `spark-submit` commands, one per json file or streaming ingestion. You just need to choose some of them, uncoment it, and type:
 ```
