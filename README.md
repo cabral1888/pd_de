@@ -135,8 +135,11 @@ airflow scheduler
 ```
 airflow webserver
 ```
-4. On the UI, click on `DAGS` tab, look for `pd_pipeline` and enable it.
-5. The same spaek-submit commands you have just saw in the previous session afe going to run every day at mid-night. You can hurry up by pressing `schedule now`
+4. On the UI, click on `DAGS` tab, look for `pd_pipeline` and enable it. You should see a screen like this:
+![img](img/Screenshot%20from%202020-01-30%2015-24-23.png)
+
+
+5. The same spark-submit commands you have just saw in the previous session afe going to run every day at mid-night. You can hurry up by pressing `Trigger now`
 
 PS.: Apache airflow will not start streaming jobs on thiz project. In this case, it is only possible through shell command line.
 PS2.: Remember to edit the script setting the environment variables according with your scenario.
